@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import com.squareup.leakcanary.LeakCanary
 import com.squareup.leakcanary.RefWatcher
+import com.zhukovme.flickrclient.api.apiModule
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.generic.bind
@@ -18,6 +19,8 @@ class App : Application(), KodeinAware {
 
     override val kodein = Kodein.lazy {
         bind<Context>() with singleton { applicationContext }
+        import(appModule())
+        import(apiModule())
     }
 
     private var refWatcher: RefWatcher? = null

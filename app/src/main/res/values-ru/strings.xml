@@ -1,6 +1,4 @@
 <resources>
-    <string name="app_name" translatable="false">FlickrClient</string>
-
     <!-- Search photos -->
     <string name="search_photos_toolbar_title">Flickr</string>
     <!---->
