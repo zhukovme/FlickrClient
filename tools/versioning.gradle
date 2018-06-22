@@ -1,0 +1,8 @@
+Properties versionProps = new Properties()
+versionProps.load(new FileInputStream("$rootDir/version.properties"))
+def major = versionProps['major'] as int
+def minor = versionProps['minor'] as int
+def patch = versionProps['patch'] as int
+
+project.ext.version_code = major * 1_000_000 + minor * 1_000 + patch
+project.ext.version_name = "${major}.${minor}.${patch}"

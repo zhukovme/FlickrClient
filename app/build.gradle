@@ -1,19 +1,21 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply from: "$rootDir/tools/lint-config.gradle"
+apply from: "$rootDir/tools/versioning.gradle"
 
 android {
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.zhukovme.flickrclient"
-        minSdkVersion 14
+        minSdkVersion 15
         targetSdkVersion 27
-        versionCode 1
-        versionName "1.0"
+        versionCode project.ext.version_code
+        versionName project.ext.version_name
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -22,12 +24,60 @@ android {
     }
 }
 
+ext.support_lib_version = '27.1.1'
+ext.constraint_layout_version = '1.1.2'
+ext.moxy_version = '1.5.5'
+ext.rxjava_version = '2.1.14'
+ext.rxandroid_version = '2.0.2'
+ext.rxkotlin_version = '2.2.0'
+ext.retrofit_version = '2.4.0'
+ext.okhttp_version = '3.10.0'
+ext.kodein_version = '5.1.0'
+ext.leakcanary_version = '1.5.4'
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+
+    // Kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    // Android
+    implementation "com.android.support:appcompat-v7:$support_lib_version"
+    implementation "com.android.support:design:$support_lib_version"
+    implementation "com.android.support.constraint:constraint-layout:$constraint_layout_version"
+
+    // MVP helper
+//    implementation "com.arello-mobile:moxy:$moxy_version"
+//    implementation "com.arello-mobile:moxy-android:$moxy_version"
+//    implementation "com.arello-mobile:moxy-app-compat:$moxy_version"
+//    kapt "com.arello-mobile:moxy-compiler:$moxy_version"
+
+    // Rx
+    implementation "io.reactivex.rxjava2:rxjava:$rxjava_version"
+    implementation "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
+    implementation "io.reactivex.rxjava2:rxkotlin:$rxkotlin_version"
+
+    // Networking
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
+
+    // Inversion of control
+    implementation "org.kodein.di:kodein-di-generic-jvm:$kodein_version"
+
+    // Logger
+    implementation 'com.jakewharton.timber:timber:4.6.1'
+
+    // Memory leak detection
+    debugImplementation "com.squareup.leakcanary:leakcanary-android:$leakcanary_version"
+    releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$leakcanary_version"
+    testImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$leakcanary_version"
+
+    // Unit tests
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
+
+    // UI tests
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 }

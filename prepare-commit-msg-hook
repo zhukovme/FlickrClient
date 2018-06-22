@@ -1,0 +1,31 @@
+#!/bin/bash
+run () {
+  echo -e "\n --- ${1} --- \n"
+  eval $2
+  result=$?
+  if [ $result -ne 0 ]
+  then
+    echo -e "\n --- ${1} failed --- \n"
+    echo "Commit rejected"
+    exit 1
+  fi
+}
+
+checkForSkipTestsSign () {
+  skip_tests_sign="!"
+  first_char=$(head -c 1 $1)
+  if [ "$first_char" == "$skip_tests_sign" ]
+  then
+    echo $(sed "s/^${first_char}//" $1) > $1
+    return 1
+  fi
+  return 0
+}
+
+checkForSkipTestsSign $1
+if [ $? -eq 0 ]
+then
+  run "Detekt" "./gradlew detektCheck --daemon"
+  run "Lint" "./gradlew lint --daemon"
+  run "Tests" "./gradlew test --daemon"
+fi
