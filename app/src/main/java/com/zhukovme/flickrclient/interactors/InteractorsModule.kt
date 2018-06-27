@@ -10,5 +10,6 @@ import org.kodein.di.generic.singleton
  * email: zhukovme@gmail.com
  */
 fun interactorsModule() = Kodein.Module("Interactors") {
-    bind<GetPhotosInteractor>() with singleton { GetPhotosInteractor(instance(), instance()) }
+    bind<GetPhotosInteractor>() with singleton { GetPhotosInteractor(instance(), instance(), instance()) }
+    bind<GetPhotoInfoInteractor>() with singleton { GetPhotoInfoInteractor(instance(), instance()) }
 }

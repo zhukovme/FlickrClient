@@ -1,6 +1,7 @@
 package com.zhukovme.flickrclient.mappers
 
 import com.zhukovme.flickrclient.model.dto.photos.PhotoDto
+import com.zhukovme.flickrclient.model.vo.PhotoInfoVo
 import com.zhukovme.flickrclient.model.vo.PhotoItemVo
 
 /**
@@ -9,7 +10,7 @@ import com.zhukovme.flickrclient.model.vo.PhotoItemVo
  */
 class PhotoMapper {
 
-    fun mapToVo(photoDto: PhotoDto): PhotoItemVo {
+    fun toVo(photoDto: PhotoDto): PhotoItemVo {
         var url: String? = null
         var height: Int? = null
         var width: Int? = null
@@ -46,6 +47,34 @@ class PhotoMapper {
             height = photoDto.heightO
             width = photoDto.widthO
         }
-        return PhotoItemVo(photoDto.id, photoDto.owner, photoDto.title, url, height, width)
+        return PhotoItemVo(photoDto.id, url, height, width)
+    }
+
+    fun toInfoVo(photoDto: PhotoDto): PhotoInfoVo {
+        var url: String? = null
+        var height: Int? = null
+        var width: Int? = null
+        if (!photoDto.urlO.isNullOrBlank()) {
+            url = photoDto.urlO
+            height = photoDto.heightO
+            width = photoDto.widthO
+        } else if (!photoDto.urlL.isNullOrBlank()) {
+            url = photoDto.urlL
+            height = photoDto.heightL
+            width = photoDto.widthL
+        } else if (!photoDto.urlC.isNullOrBlank()) {
+            url = photoDto.urlC
+            height = photoDto.heightC
+            width = photoDto.widthC
+        } else if (!photoDto.urlZ.isNullOrBlank()) {
+            url = photoDto.urlZ
+            height = photoDto.heightZ
+            width = photoDto.widthZ
+        } else if (!photoDto.urlM.isNullOrBlank()) {
+            url = photoDto.urlM
+            height = photoDto.heightM
+            width = photoDto.widthM
+        }
+        return PhotoInfoVo(photoDto.id, photoDto.owner, photoDto.title, url, height, width)
     }
 }

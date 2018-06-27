@@ -1,5 +1,23 @@
 <resources>
+    <!-- Common errors -->
+    <string name="error.unexpected_error">Неизвестная ошибка</string>
+    <!---->
+
+    <!-- Snackbar -->
+    <string name="snackbar.settings">Настройки</string>
+    <!---->
+
     <!-- Search photos -->
-    <string name="search_photos_toolbar_title">Flickr</string>
+    <string name="search_photos.toolbar_title">Flickr</string>
+    <!---->
+
+    <!-- Photo info -->
+    <string name="photo_info.toolbar_title">Инфо о фото</string>
+    <string name="photo_info.by_author">От %1$s</string>
+    <string name="photo_info.image_saved">Изображение сохранено в галлерею</string>
+
+    <string name="photo_info.menu.save">Сохранить оригинал</string>
+
+    <string name="photo_info.error.need_storage_permission">Нужны разрешения, чтобы сохранить изображение</string>
     <!---->
 </resources>

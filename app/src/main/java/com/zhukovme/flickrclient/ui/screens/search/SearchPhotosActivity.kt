@@ -9,6 +9,7 @@ import com.zhukovme.flickrclient.R
 import com.zhukovme.flickrclient.model.vo.PhotoItemVo
 import com.zhukovme.flickrclient.ui.base.BaseActivity
 import com.zhukovme.flickrclient.ui.common.SpacesItemDecoration
+import com.zhukovme.flickrclient.ui.screens.photoInfo.PhotoInfoActivity
 import kotlinx.android.synthetic.main.activity_search_photos.*
 import kotlinx.android.synthetic.main.toolbar.*
 import org.kodein.di.Kodein
@@ -17,7 +18,7 @@ import org.kodein.di.generic.instance
 class SearchPhotosActivity : BaseActivity(), SearchPhotosView {
 
     companion object {
-        private const val photosSpanCount = 3
+        private const val PHOTOS_SPAN_COUNT = 3
 
         fun start(context: Context) {
             context.startActivity(Intent(context, SearchPhotosActivity::class.java))
@@ -51,10 +52,15 @@ class SearchPhotosActivity : BaseActivity(), SearchPhotosView {
         rvAdapter?.setPhotos(photos)
     }
 
+    override fun showPhotoInfo(photoId: String) {
+        PhotoInfoActivity.start(this, photoId)
+    }
+
     private fun setupRv() {
-        val llManager = GridLayoutManager(this, photosSpanCount, GridLayoutManager.VERTICAL, false)
+        val llManager = GridLayoutManager(this, PHOTOS_SPAN_COUNT, GridLayoutManager.VERTICAL, false)
         val decoration = SpacesItemDecoration(2)
         rvAdapter = PhotosRvAdapter()
+        rvAdapter?.onItemClick = presenter::onPhotoItemClick
 
         rv_photos.layoutManager = llManager
         rv_photos.addItemDecoration(decoration)

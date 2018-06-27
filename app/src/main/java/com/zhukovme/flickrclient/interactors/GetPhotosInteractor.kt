@@ -1,6 +1,7 @@
 package com.zhukovme.flickrclient.interactors
 
 import com.zhukovme.flickrclient.api.PhotosApi
+import com.zhukovme.flickrclient.data.PhotosStore
 import com.zhukovme.flickrclient.mappers.PhotoMapper
 import com.zhukovme.flickrclient.model.vo.PhotoItemVo
 import io.reactivex.Observable
@@ -12,17 +13,19 @@ import java.util.*
  * email: zhukovme@gmail.com
  */
 class GetPhotosInteractor(private val photosApi: PhotosApi,
+                          private val photosStore: PhotosStore,
                           private val photoMapper: PhotoMapper) {
 
     companion object {
-        private const val extras = "description,date_upload,url_s,url_q,url_m,url_n,url_z,url_c,url_l,url_o"
-        private const val perPage = 51
+        private const val EXTRAS = "description,date_upload,url_s,url_q,url_m,url_n,url_z,url_c,url_l,url_o"
+        private const val PER_PAGE = 51
     }
 
     fun getRecent(page: Int): Single<List<PhotoItemVo>> =
-            photosApi.getRecent(extras, perPage, page)
+            photosApi.getRecent(EXTRAS, PER_PAGE, page)
                     .map { it.photos?.photos ?: Collections.emptyList() }
+                    .doOnEvent { photos, _ -> photosStore.putPhotos(photos) }
                     .flatMapObservable { Observable.fromIterable(it) }
-                    .map(photoMapper::mapToVo)
+                    .map(photoMapper::toVo)
                     .toList()
 }

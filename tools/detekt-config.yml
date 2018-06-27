@@ -1,6 +1,10 @@
 autoCorrect: true
 failFast: true
 
+naming:
+  PackageNaming:
+    active: false
+
 style:
   MaxLineLength:
     maxLineLength: 120

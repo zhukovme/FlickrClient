@@ -11,4 +11,5 @@ abstract class BasePresenter
 interface MvpView {
     fun showSnackbar(@StringRes message: Int)
     fun showToast(@StringRes message: Int)
+    fun showPermissionError(message: Int)
 }

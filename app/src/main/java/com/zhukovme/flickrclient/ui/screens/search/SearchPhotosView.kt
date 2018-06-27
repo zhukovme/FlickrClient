@@ -6,4 +6,6 @@ import com.zhukovme.flickrclient.ui.base.MvpView
 interface SearchPhotosView : MvpView {
 
     fun showPhotos(photos: List<PhotoItemVo>)
+
+    fun showPhotoInfo(photoId: String)
 }

@@ -2,9 +2,12 @@ package com.zhukovme.flickrclient
 
 import android.app.Application
 import android.content.Context
+import com.github.piasy.biv.BigImageViewer
+import com.github.piasy.biv.loader.glide.GlideImageLoader
 import com.squareup.leakcanary.LeakCanary
 import com.squareup.leakcanary.RefWatcher
 import com.zhukovme.flickrclient.api.apiModule
+import com.zhukovme.flickrclient.data.dataModule
 import com.zhukovme.flickrclient.interactors.interactorsModule
 import com.zhukovme.flickrclient.mappers.mappersModule
 import org.kodein.di.Kodein
@@ -25,6 +28,7 @@ class App : Application(), KodeinAware {
         import(apiModule())
         import(interactorsModule())
         import(mappersModule())
+        import(dataModule())
     }
 
     private var refWatcher: RefWatcher? = null
@@ -33,6 +37,7 @@ class App : Application(), KodeinAware {
         super.onCreate()
         if (!setupLeakCanary()) return
         if (BuildConfig.DEBUG) debugInit()
+        BigImageViewer.initialize(GlideImageLoader.with(this))
     }
 
     private fun setupLeakCanary(): Boolean {
