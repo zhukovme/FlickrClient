@@ -1,4 +1,4 @@
-package com.zhukovme.flickrclient.ui.search
+package com.zhukovme.flickrclient.ui.screens.search
 
 import org.kodein.di.Kodein
 import org.kodein.di.generic.bind

@@ -5,7 +5,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.0-alpha18'
+        classpath 'com.android.tools.build:gradle:3.2.0-beta01'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
@@ -26,6 +26,7 @@ task clean(type: Delete) {
 }
 
 detekt {
+    version = "1.0.0.RC7-2"
     profile("main") {
         input = "$rootDir/app/src/main/java"
         output = "$rootDir/reports"

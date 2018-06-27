@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.Default">
 
-        <activity android:name=".ui.search.SearchPhotosActivity">
+        <activity android:name="com.zhukovme.flickrclient.ui.screens.search.SearchPhotosActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

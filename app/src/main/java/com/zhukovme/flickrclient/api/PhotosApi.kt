@@ -1,9 +1,9 @@
 package com.zhukovme.flickrclient.api
 
-import com.zhukovme.flickrclient.api.dto.photos.PhotosGetInfoResponse
-import com.zhukovme.flickrclient.api.dto.photos.PhotosGetRecentResponse
-import com.zhukovme.flickrclient.api.dto.photos.PhotosGetSizesResponse
-import com.zhukovme.flickrclient.api.dto.photos.PhotosSearchResponse
+import com.zhukovme.flickrclient.model.dto.photos.PhotosGetInfoResponse
+import com.zhukovme.flickrclient.model.dto.photos.PhotosGetRecentResponse
+import com.zhukovme.flickrclient.model.dto.photos.PhotosGetSizesResponse
+import com.zhukovme.flickrclient.model.dto.photos.PhotosSearchResponse
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -15,11 +15,13 @@ import retrofit2.http.Query
 interface PhotosApi {
 
     @GET("rest/?method=flickr.photos.getRecent")
-    fun getRecent(@Query("per_page") perPage: Int? = null,
+    fun getRecent(@Query("extras") extras: String? = null,
+                  @Query("per_page") perPage: Int? = null,
                   @Query("page") page: Int? = null): Single<PhotosGetRecentResponse>
 
     @GET("rest/?method=fflickr.photos.search")
-    fun search(@Query("tags") tags: String? = null,
+    fun search(@Query("extras") extras: String? = null,
+               @Query("tags") tags: String? = null,
                @Query("per_page") perPage: Int? = null,
                @Query("page") page: Int? = null): Single<PhotosSearchResponse>
 

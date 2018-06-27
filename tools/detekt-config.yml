@@ -16,10 +16,16 @@ style:
 comments:
   active: false
 
+exceptions:
+  TooGenericExceptionCaught:
+    active: false
+
 complexity:
   LabeledExpression:
     active: false
   TooManyFunctions:
+    active: false
+  ComplexMethod:
     active: false
 
 potential-bugs:

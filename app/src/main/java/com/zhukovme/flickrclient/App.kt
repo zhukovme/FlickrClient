@@ -5,6 +5,8 @@ import android.content.Context
 import com.squareup.leakcanary.LeakCanary
 import com.squareup.leakcanary.RefWatcher
 import com.zhukovme.flickrclient.api.apiModule
+import com.zhukovme.flickrclient.interactors.interactorsModule
+import com.zhukovme.flickrclient.mappers.mappersModule
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.generic.bind
@@ -21,6 +23,8 @@ class App : Application(), KodeinAware {
         bind<Context>() with singleton { applicationContext }
         import(appModule())
         import(apiModule())
+        import(interactorsModule())
+        import(mappersModule())
     }
 
     private var refWatcher: RefWatcher? = null

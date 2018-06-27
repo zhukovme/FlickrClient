@@ -1,4 +1,4 @@
-package com.zhukovme.flickrclient.api.dto.photos
+package com.zhukovme.flickrclient.model.dto.photos
 
 import com.google.gson.annotations.SerializedName
 

@@ -21,11 +21,11 @@ abstract class BaseActivity : AppCompatActivity(), KodeinAware, MvpView {
     override val kodein: Kodein by lazy {
         Kodein {
             extend(parentKodein)
-            import(deps())
+            import(depsModule())
         }
     }
 
-    abstract fun deps(): Kodein.Module
+    abstract fun depsModule(): Kodein.Module
 
     override fun showSnackbar(@StringRes message: Int) {
         Snackbar.make(mainLayout, message, Snackbar.LENGTH_LONG)
