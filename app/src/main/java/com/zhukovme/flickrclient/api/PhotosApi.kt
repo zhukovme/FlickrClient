@@ -1,8 +1,6 @@
 package com.zhukovme.flickrclient.api
 
-import com.zhukovme.flickrclient.model.dto.photos.PhotosGetInfoResponse
 import com.zhukovme.flickrclient.model.dto.photos.PhotosGetRecentResponse
-import com.zhukovme.flickrclient.model.dto.photos.PhotosGetSizesResponse
 import com.zhukovme.flickrclient.model.dto.photos.PhotosSearchResponse
 import io.reactivex.Single
 import retrofit2.http.GET
@@ -19,16 +17,10 @@ interface PhotosApi {
                   @Query("per_page") perPage: Int? = null,
                   @Query("page") page: Int? = null): Single<PhotosGetRecentResponse>
 
-    @GET("rest/?method=fflickr.photos.search")
+    @GET("rest/?method=flickr.photos.search")
     fun search(@Query("extras") extras: String? = null,
-               @Query("tags") tags: String? = null,
+               @Query("text") text: String? = null,
+               @Query("sort") sort: String? = null,
                @Query("per_page") perPage: Int? = null,
                @Query("page") page: Int? = null): Single<PhotosSearchResponse>
-
-    @GET("rest/?method=fflickr.photos.search")
-    fun getInfo(@Query("photo_id") photoId: String,
-                @Query("secret") secret: String? = null): Single<PhotosGetInfoResponse>
-
-    @GET("rest/?method=flickr.photos.getSizes")
-    fun getSizes(@Query("photo_id") photoId: String): Single<PhotosGetSizesResponse>
 }

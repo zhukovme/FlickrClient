@@ -10,5 +10,5 @@ import org.kodein.di.generic.singleton
  * email: zhukovme@gmail.com
  */
 fun searchPhotosModule(activity: SearchPhotosActivity) = Kodein.Module("Search photos") {
-    bind<SearchPhotosPresenter>() with singleton { SearchPhotosPresenter(activity, instance()) }
+    bind<SearchPhotosPresenter>() with singleton { SearchPhotosPresenter(activity, instance(), instance()) }
 }

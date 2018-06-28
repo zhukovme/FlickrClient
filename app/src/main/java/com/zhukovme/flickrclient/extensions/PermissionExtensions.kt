@@ -18,26 +18,23 @@ const val STORAGE_PERMISSION_REQUEST = 1
 
 fun Context.checkStoragePermission(): Boolean = isPermissionsGranted(listOf(WRITE_EXTERNAL_STORAGE))
 
-fun Activity.requestStoragePermission(requestCode: Int = STORAGE_PERMISSION_REQUEST) {
-    requestPermission(requestCode, WRITE_EXTERNAL_STORAGE)
-}
+fun Activity.requestStoragePermission(requestCode: Int = STORAGE_PERMISSION_REQUEST) =
+        requestPermission(requestCode, WRITE_EXTERNAL_STORAGE)
 
 //endregion
 
-fun Activity.requestPermission(requestCode: Int, vararg permissions: String) {
-    ActivityCompat.requestPermissions(this, permissions, requestCode)
-}
+fun Activity.requestPermission(requestCode: Int, vararg permissions: String) =
+        ActivityCompat.requestPermissions(this, permissions, requestCode)
 
 fun Context.isPermissionsGranted(permissions: List<String>): Boolean {
-    val grantResults = permissions.map {
+    return permissions.map {
         return@map try {
             ContextCompat.checkSelfPermission(this, it)
         } catch (e: Exception) {
             Timber.d(e, "Failure checking permission %s", it)
             PackageManager.PERMISSION_DENIED
         }
-    }
-    return checkResult(grantResults)
+    }.let { checkResult(it) }
 }
 
 fun Context.checkResult(grantResults: List<Int>): Boolean {

@@ -21,11 +21,29 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_photos"
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/srl_images"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="vertical"/>
+            android:layout_marginTop="60dp">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_images"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="vertical"/>
+
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+        <com.arlib.floatingsearchview.FloatingSearchView
+            android:id="@+id/search_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:floatingSearch_close_search_on_keyboard_dismiss="true"
+            app:floatingSearch_leftActionMode="noLeftAction"
+            app:floatingSearch_searchHint="@string/search_photos.menu.search"
+            app:floatingSearch_showSearchKey="true"
+            app:floatingSearch_suggestionsListAnimDuration="250"/>
 
     </RelativeLayout>
 

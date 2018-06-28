@@ -6,6 +6,8 @@ naming:
     active: false
 
 style:
+  ExpressionBodySyntax:
+    active: false
   MaxLineLength:
     maxLineLength: 120
   UnusedPrivateMember:

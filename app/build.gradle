@@ -29,6 +29,7 @@ ext.constraint_layout_version = '1.1.2'
 ext.glide_version = '4.7.1'
 ext.big_image_viewer_version = '1.4.6'
 ext.swipeback_version = '1.0.2@aar'
+ext.floating_search_view = '2.1.1'
 //ext.moxy_version = '1.5.5'
 ext.rxjava_version = '2.1.14'
 ext.rxandroid_version = '2.0.2'
@@ -45,6 +46,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     // Android
+    //noinspection GradleCompatible
     implementation "com.android.support:appcompat-v7:$support_lib_version"
     implementation "com.android.support:design:$support_lib_version"
     implementation "com.android.support.constraint:constraint-layout:$constraint_layout_version"
@@ -55,6 +57,7 @@ dependencies {
     implementation "com.github.piasy:BigImageViewer:$big_image_viewer_version"
     implementation "com.github.piasy:ProgressPieIndicator:$big_image_viewer_version"
     implementation "com.github.liuguangqiang.swipeback:library:$swipeback_version"
+    implementation "com.github.arimorty:floatingsearchview:$floating_search_view"
 
     // MVP helper
 //    implementation "com.arello-mobile:moxy:$moxy_version"

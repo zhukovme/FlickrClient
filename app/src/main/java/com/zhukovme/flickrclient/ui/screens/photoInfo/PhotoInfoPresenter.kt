@@ -13,9 +13,7 @@ class PhotoInfoPresenter(private val view: PhotoInfoView,
     private var disposable: Disposable? = null
 
     fun onCreate(photoId: String) {
-        disposable = getPhotoInfoInteractor.getPhotoInfo(photoId)
-                .applySchedulers()
-                .subscribe(view::showPhotoInfo, this::handleError)
+        loadPhotoInfo(photoId)
     }
 
     fun onDestroy() {
@@ -28,6 +26,12 @@ class PhotoInfoPresenter(private val view: PhotoInfoView,
 
     fun onImageSaveError(t: Throwable?) {
         handleError(t)
+    }
+
+    private fun loadPhotoInfo(photoId: String) {
+        disposable = getPhotoInfoInteractor.getPhotoInfo(photoId)
+                .applySchedulers()
+                .subscribe(view::showPhotoInfo, this::handleError)
     }
 
     private fun handleError(t: Throwable?) {
