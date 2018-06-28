@@ -22,7 +22,14 @@ class GetPhotosInteractor(private val photosApi: PhotosApi,
         private const val PER_PAGE = 51
     }
 
-    fun getRecent(page: Int): Single<List<PhotoItemVo>> =
+    fun loadPhotos(page: Int, query: String? = null): Single<List<PhotoItemVo>> =
+            if (query == null || query.isBlank()) {
+                getRecent(page)
+            } else {
+                search(page, query)
+            }
+
+    private fun getRecent(page: Int): Single<List<PhotoItemVo>> =
             photosApi.getRecent(EXTRAS, PER_PAGE, page)
                     .map { it.photos?.photos ?: Collections.emptyList() }
                     .doOnEvent { photos, _ -> photosStore.putPhotos(photos) }
@@ -30,8 +37,8 @@ class GetPhotosInteractor(private val photosApi: PhotosApi,
                     .map(photoMapper::toVo)
                     .toList()
 
-    fun search(page: Int, query: String?): Single<List<PhotoItemVo>> =
-            photosApi.search(EXTRAS, query ?: "", SORT, PER_PAGE, page)
+    private fun search(page: Int, query: String): Single<List<PhotoItemVo>> =
+            photosApi.search(query, EXTRAS, SORT, PER_PAGE, page)
                     .map { it.photos?.photos ?: Collections.emptyList() }
                     .doOnEvent { photos, _ -> photosStore.putPhotos(photos) }
                     .flatMapObservable { Observable.fromIterable(it) }

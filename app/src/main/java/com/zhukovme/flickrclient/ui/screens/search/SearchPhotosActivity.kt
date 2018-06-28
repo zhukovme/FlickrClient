@@ -5,11 +5,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.CoordinatorLayout
 import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.RecyclerView
 import com.arlib.floatingsearchview.FloatingSearchView
 import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion
 import com.zhukovme.flickrclient.R
 import com.zhukovme.flickrclient.model.vo.PhotoItemVo
 import com.zhukovme.flickrclient.ui.base.BaseActivity
+import com.zhukovme.flickrclient.ui.common.EndlessScrollListener
 import com.zhukovme.flickrclient.ui.common.SpacesItemDecoration
 import com.zhukovme.flickrclient.ui.common.StringSuggestion
 import com.zhukovme.flickrclient.ui.screens.photoInfo.PhotoInfoActivity
@@ -34,6 +36,7 @@ class SearchPhotosActivity : BaseActivity(), SearchPhotosView {
     private val presenter: SearchPhotosPresenter by instance()
 
     private var rvAdapter: PhotosRvAdapter? = null
+    private var scrollListener: EndlessScrollListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,8 +64,18 @@ class SearchPhotosActivity : BaseActivity(), SearchPhotosView {
         srl_images.post { srl_images.isRefreshing = false }
     }
 
-    override fun showPhotos(photos: List<PhotoItemVo>) {
+    override fun setPhotos(photos: List<PhotoItemVo>) {
         rvAdapter?.setPhotos(photos)
+        scrollListener?.resetState()
+    }
+
+    override fun addPhotos(photos: List<PhotoItemVo>) {
+        rvAdapter?.addPhotos(photos)
+    }
+
+    override fun clearPhotos() {
+        rvAdapter?.clear()
+        scrollListener?.resetState()
     }
 
     override fun setSuggestions(suggestions: List<StringSuggestion>) {
@@ -75,6 +88,11 @@ class SearchPhotosActivity : BaseActivity(), SearchPhotosView {
 
     private fun setupRv() {
         val llManager = GridLayoutManager(this, PHOTOS_SPAN_COUNT, GridLayoutManager.VERTICAL, false)
+        scrollListener = object : EndlessScrollListener(llManager) {
+            override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView?) {
+                presenter.onLoadMore(page, search_view.query)
+            }
+        }
         val decoration = SpacesItemDecoration(2)
         rvAdapter = PhotosRvAdapter()
         rvAdapter?.onItemClick = presenter::onPhotoItemClick
@@ -82,6 +100,7 @@ class SearchPhotosActivity : BaseActivity(), SearchPhotosView {
         rv_images.layoutManager = llManager
         rv_images.addItemDecoration(decoration)
         rv_images.adapter = rvAdapter
+        rv_images.addOnScrollListener(scrollListener)
     }
 
     private fun setupSearchView() {
@@ -101,7 +120,7 @@ class SearchPhotosActivity : BaseActivity(), SearchPhotosView {
 
         search_view.setOnFocusChangeListener(object : FloatingSearchView.OnFocusChangeListener {
             override fun onFocus() {
-                search_view.swapSuggestions(presenter.loadSuggestions())
+                search_view.swapSuggestions(presenter.loadSuggestions(search_view.query))
             }
 
             override fun onFocusCleared() {

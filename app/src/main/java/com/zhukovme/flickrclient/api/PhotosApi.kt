@@ -18,8 +18,8 @@ interface PhotosApi {
                   @Query("page") page: Int? = null): Single<PhotosGetRecentResponse>
 
     @GET("rest/?method=flickr.photos.search")
-    fun search(@Query("extras") extras: String? = null,
-               @Query("text") text: String? = null,
+    fun search(@Query("text") text: String,
+               @Query("extras") extras: String? = null,
                @Query("sort") sort: String? = null,
                @Query("per_page") perPage: Int? = null,
                @Query("page") page: Int? = null): Single<PhotosSearchResponse>

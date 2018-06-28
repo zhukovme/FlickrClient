@@ -10,7 +10,11 @@ interface SearchPhotosView : MvpView {
 
     fun hideRefreshing()
 
-    fun showPhotos(photos: List<PhotoItemVo>)
+    fun setPhotos(photos: List<PhotoItemVo>)
+
+    fun addPhotos(photos: List<PhotoItemVo>)
+
+    fun clearPhotos()
 
     fun setSuggestions(suggestions: List<StringSuggestion>)
 

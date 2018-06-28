@@ -16,17 +16,23 @@ import kotlinx.android.synthetic.main.list_item_photo.view.*
  */
 class PhotosRvAdapter : RecyclerView.Adapter<PhotosRvAdapter.ViewHolder>() {
 
-    private var photos: MutableList<PhotoItemVo> = mutableListOf()
+    private var photosMap: MutableMap<String, PhotoItemVo> = mutableMapOf()
     var onItemClick: ((PhotoItemVo) -> Unit)? = null
 
     fun setPhotos(photos: List<PhotoItemVo>) {
-        this.photos.clear()
-        this.photos.addAll(photos)
+        photosMap.clear()
+        photos.forEach { it.id?.let { id -> photosMap.put(id, it) } }
         notifyDataSetChanged()
     }
 
+    fun addPhotos(photos: List<PhotoItemVo>) {
+        val position = photosMap.size
+        photos.forEach { it.id?.let { id -> photosMap.put(id, it) } }
+        notifyItemRangeInserted(position, photos.size)
+    }
+
     fun clear() {
-        this.photos.clear()
+        photosMap.clear()
         notifyDataSetChanged()
     }
 
@@ -37,10 +43,10 @@ class PhotosRvAdapter : RecyclerView.Adapter<PhotosRvAdapter.ViewHolder>() {
         return ViewHolder(view)
     }
 
-    override fun getItemCount(): Int = photos.size
+    override fun getItemCount(): Int = photosMap.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val photoItem = photos[position]
+        val photoItem = photosMap.values.toList()[position]
         holder.bind(photoItem)
     }
 
@@ -64,7 +70,7 @@ class PhotosRvAdapter : RecyclerView.Adapter<PhotosRvAdapter.ViewHolder>() {
         }
 
         override fun onClick(v: View?) {
-            val photoItem = photos[adapterPosition]
+            val photoItem = photosMap.values.toList()[adapterPosition]
             onItemClick?.invoke(photoItem)
         }
     }
